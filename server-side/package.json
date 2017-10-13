@@ -1,0 +1,24 @@
+{
+  "name": "re-word-server",
+  "version": "0.0.1",
+  "description": "Server side for Re-Word Wordpress in Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node.js",
+    "Wordpress"
+  ],
+  "author": "Jason Salerno",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^1.1.6",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7",
+    "graphql-tools": "^2.4.0",
+    "mysql": "^2.15.0"
+  }
+}

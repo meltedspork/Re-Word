@@ -1,2 +1,2 @@
 # Re-Word
-Wordpress basic theme, WP-API, React, Backbone.js Model Collection
+Wordpress being served in Node.js + Graphql and presented in React.

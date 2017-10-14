@@ -3,8 +3,15 @@
   "version": "0.0.1",
   "description": "Wordpress Client and Server using React and Node.js, because why not?",
   "main": "index.js",
+  "config": {
+    "client": "--prefix ./client-side",
+    "server": "--prefix ./server-side"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npm install $npm_package_config_client && npm install $npm_package_config_server",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "npm run lint $npm_package_config_client",
+    "test:server": "npm run lint $npm_package_config_server"
   },
   "repository": {
     "type": "git",

@@ -1,9 +1,13 @@
 {
   "name": "re-word-server",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=8.4.0"
+  },
   "description": "Server side for Re-Word Wordpress in Node.js",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,9 +16,18 @@
   ],
   "author": "Jason Salerno",
   "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
   "dependencies": {
     "apollo-server-express": "^1.1.6",
     "body-parser": "^1.18.2",
+    "eslint": "^4.9.0",
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.7",

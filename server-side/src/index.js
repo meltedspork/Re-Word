@@ -34,7 +34,22 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
 
 const schema = require('./schema')
 
-var app = express()
+import Connector from './connector'
+
+const connector = new Connector()
+const app = express()
+
+app.get('/', (req, res) => {
+  connector.query('SELECT * from wp_users', (err,data) => {
+    if (err) {
+      // error handling code goes here
+      console.log(err[0])           
+    } else {            
+      // code to execute on data retrieval
+      console.log(data[0], data[1]) 
+    }
+  })
+})
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
 
@@ -43,6 +58,7 @@ app.use('/graphiql', graphiqlExpress({
 }))
 
 const PORT = 3000
+
 app.listen(PORT, () => {
   console.log(`Hackernews GraphQL server running on port ${PORT}.`)
 })

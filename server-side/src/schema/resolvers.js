@@ -8,18 +8,19 @@ const links = [
     id: 2,
     url: 'http://dev.apollodata.com',
     description: 'Awesome GraphQL Client'
-  },
-];
+  }
+]
 
 module.exports = {
   Query: {
-    allLinks: () => links,
+    allLinks: () => links
   },
   Mutation: {
     createLink: (_, data) => {
-      const newLink = Object.assign({id: links.length + 1}, data);
-      links.push(newLink);
-      return newLink;
+      const newLink = Object.assign({id: links.length + 1}, data)
+      links.push(newLink)
+
+      return newLink
     }
-  },
-};
+  }
+}

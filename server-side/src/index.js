@@ -1,11 +1,36 @@
+/**
+ * This is entrypoint for Re-Word server-side.
+ * @namespace Server
+ * @requires express
+ * @see {@link express}
+ * @requires body-parser
+ * @see {@link body-parser}
+ * @requires apollo-server-express
+ * @see {@link apollo-server-express}
+ */
+/**
+ * @desc Fast, unopinionated, minimalist web framework for node. https://expressjs.com
+ * @version 4.16.2
+ * @external express
+ * @see {@link https://github.com/expressjs/express ExpressJS}
+ */
 const express = require('express')
 
-// This package automatically parses JSON requests.
+/**
+ * @desc Node.js body parsing middleware.
+ * @version 1.18.2
+ * @external body-parser
+ * @see {@link https://github.com/expressjs/body-parser body-parser}
+ */
 const bodyParser = require('body-parser')
 
-// This package will handle GraphQL server requests and responses
-// for you, based on your schema.
-const {graphqlExpress, graphiqlExpress} = require('apollo-server-express')
+/**
+ * @desc This is the Express and Connect integration of GraphQL Server.
+ * @version 1.1.6
+ * @external apollo-server-express
+ * @see {@link https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express apollo-server-express}
+ */
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
 
 const schema = require('./schema')
 

@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  server:
+    depends_on:
+      - db
+    image: node:alpine
+    user: node
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./server-side:/home/node/app
+    ports:
+      - 3000:3000
+    command: npm start
+
+  client:
+    image: node:alpine
+    user: node
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client-side:/home/node/app
+    ports:
+      - 5000:3000
+    command: yarn start
+
+  documentation:
+    image: nginx:latest
+    ports:
+      - "8222:80"
+    volumes:
+        - ./docs:/docs
+        - ./nginx/site.conf:/etc/nginx/conf.d/default.conf
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - 8000:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8111:80
+    environment:
+      MYSQL_USERNAME: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+      PMA_HOST: db
+
+volumes:
+    db_data:

@@ -3,49 +3,44 @@ var mysql = require('mysql')
 class Connector {
   constructor () {
     console.log('MySQL: constructor')
-    
-    this.mysql = mysql;
+
     this.connection = null
 
-    this.config = {
+    const config = {
+      connectionLimit: 100,
       host: 'db',
       port: 3306,
       user: 'wordpress',
       password: 'wordpress',
-      database: 'wordpress'
+      database: 'wordpress',
+      debug: false
     }
 
-    console.log('MySQL: config', this.config)
+    this.pool = mysql.createPool(config)
+    console.log('MySQL: config', config)
   }
 
-  _open () {
-    //console.log('MySQL: opening:', this.config)
-    this.connection = this.mysql.createConnection(this.config)
-    // console.log('MySQL: createConnection:', this.connection)
-
-    this.connection.connect(err => {
-      // console.log('MySQL: connecting')
-      if (err) console.log(err);
-      console.log('MySQL: connected')
+  async _open () {
+    await new Promise((resolve, reject) => {
+      this.pool.getConnection((err, connection) => {
+        if (err) {
+          return reject(err)
+        }
+        this.connection = connection
+        resolve(connection)
+      })
     })
   }
 
-  _close () {
-    // console.log('MySQL: disconnecting', this.connection)
-    this.connection.end()
-    console.log('MySQL: disconnected')
-  }
+  async query (queryStatement, callback) {
+    await this._open()
 
-  query (queryStatement, callback) {
-    this._open();
-    // console.log('MySQL: quering', this.connection)
     this.connection.query(queryStatement, (err, rows, fields) => {
-      this._close()
-
       if (err) {
-        callback(['Error while performing Query.', err], null);
+        // eslint-disable-next-line
+        callback(['Error while performing Query.', err], null)
       } else {
-        callback(null, ['The solution is: ', rows]);
+        callback(null, ['The solution is: ', rows])
       }
     })
   }

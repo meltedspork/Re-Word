@@ -14,7 +14,7 @@
  * @external express
  * @see {@link https://github.com/expressjs/express ExpressJS}
  */
-const express = require('express')
+import express from 'express'
 
 /**
  * @desc Node.js body parsing middleware.
@@ -22,7 +22,7 @@ const express = require('express')
  * @external body-parser
  * @see {@link https://github.com/expressjs/body-parser body-parser}
  */
-const bodyParser = require('body-parser')
+import bodyParser from 'body-parser'
 
 /**
  * @desc This is the Express and Connect integration of GraphQL Server.
@@ -30,11 +30,28 @@ const bodyParser = require('body-parser')
  * @external apollo-server-express
  * @see {@link https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express apollo-server-express}
  */
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 
-const schema = require('./schema')
+import schema from './schema'
 
-var app = express()
+import Connector from './connector'
+
+const connector = new Connector()
+const app = express()
+
+app.get('/', (req, res) => {
+  connector.query('SELECT * from wp_users', (err, data) => {
+    if (err) {
+      // error handling code goes here
+      console.log(err[0])
+      res.json(err[0])
+    } else {
+      // code to execute on data retrieval
+      console.log(data[0], data[1])
+      res.json(data[1])
+    }
+  })
+})
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
 
@@ -43,6 +60,7 @@ app.use('/graphiql', graphiqlExpress({
 }))
 
 const PORT = 3000
+
 app.listen(PORT, () => {
   console.log(`Hackernews GraphQL server running on port ${PORT}.`)
 })

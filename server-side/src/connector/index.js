@@ -7,17 +7,17 @@ class Connector {
     this.connection = null
 
     const config = {
-      connectionLimit: 100,
-      host: 'db',
-      port: 3306,
-      user: 'wordpress',
-      password: 'wordpress',
-      database: 'wordpress',
-      debug: false
+      connectionLimit: process.env.DATABASE_LIMIT,
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      debug: process.env.DATABASE_DEBUG
     }
 
     this.pool = mysql.createPool(config)
-    console.log('MySQL: config', config)
+    // console.log('MySQL: config', config)
   }
 
   async _open () {

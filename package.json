@@ -8,7 +8,7 @@
     "server": "--prefix ./server-side"
   },
   "scripts": {
-    "docs": "./node_modules/.bin/jsdoc -c ./jsdoc.conf -r README.md",
+    "docs:build": "./node_modules/.bin/jsdoc -c ./jsdoc.conf -r README.md",
     "postinstall": "npm install $npm_package_config_client && npm install $npm_package_config_server",
     "test": "npm run test:client && npm run test:server",
     "test:client": "npm run lint $npm_package_config_client",

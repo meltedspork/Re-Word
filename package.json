@@ -12,7 +12,12 @@
     "postinstall": "npm install $npm_package_config_client && npm install $npm_package_config_server",
     "test": "npm run test:client && npm run test:server",
     "test:client": "npm run lint $npm_package_config_client",
-    "test:server": "npm run lint $npm_package_config_server"
+    "test:server": "npm run lint $npm_package_config_server",
+    "prestart": "npm install",
+    "start": "docker-compose up",
+    "restart": "docker-compose down && docker-compose up",
+    "stop": "docker-compose down",
+    "refresh": "docker-compose down && npm install && docker-compose up --build"
   },
   "repository": {
     "type": "git",
